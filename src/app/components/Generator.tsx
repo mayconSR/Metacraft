@@ -131,7 +131,10 @@ export function Generator({ initialValues }: { initialValues: Partial<FormValues
     return lines.join('\n')
   }, [values, ogURL])
 
-  const contrast = useMemo(() => ratioWCAG(values.ogBg, values.ogFg), [values.ogBg, values.ogFg])
+  const contrast = useMemo(
+  () => ratioWCAG(values.ogBg ?? '#0ea5e9', values.ogFg ?? '#020617'),
+  [values.ogBg, values.ogFg]
+)
   const contrastMsg =
     contrast >= 4.5
       ? 'Bom contraste (≥ 4.5:1)'
@@ -269,7 +272,7 @@ export function Generator({ initialValues }: { initialValues: Partial<FormValues
                     id={`${id}-ogbg`}
                     type="color"
                     className="h-10 w-14 rounded-md border border-black/10 dark:border-white/10"
-                    value={isHex(values.ogBg) ? values.ogBg : '#0ea5e9'}
+                    value={isHex(values.ogBg ?? '') ? values.ogBg! : '#0ea5e9'}
                     onChange={(e) => setValue('ogBg', e.target.value, { shouldDirty: true, shouldTouch: true })}
                     aria-label="Cor de fundo"
                   />
@@ -289,7 +292,7 @@ export function Generator({ initialValues }: { initialValues: Partial<FormValues
                     id={`${id}-ogfg`}
                     type="color"
                     className="h-10 w-14 rounded-md border border-black/10 dark:border-white/10"
-                    value={isHex(values.ogFg) ? values.ogFg : '#020617'}
+                    value={isHex(values.ogFg ?? '') ? values.ogFg! : '#020617'}
                     onChange={(e) => setValue('ogFg', e.target.value, { shouldDirty: true, shouldTouch: true })}
                     aria-label="Cor do texto"
                   />
