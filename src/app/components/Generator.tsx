@@ -23,7 +23,7 @@ const schema = z.object({
   jsonldType: z.enum(['WebSite', 'Article', 'Person']).default('WebSite'),
 })
 
-export type FormValues = z.infer<typeof schema>
+export type FormValues = z.input<typeof schema>
 
 /** ---------- Utils ---------- */
 const isHex = (s: string) => HEX.test(s)
@@ -117,13 +117,13 @@ export function Generator({ initialValues }: { initialValues: Partial<FormValues
       `<meta name="description" content="${values.description}" />`,
       `<link rel="canonical" href="${values.canonical}" />`,
       `<!-- Open Graph -->`,
-      `<meta property="og:type" content="${values.type}" />`,
+      `<meta property="og:type" content="${values.type ?? 'website'}" />`,
       `<meta property="og:site_name" content="${values.siteName}" />`,
       `<meta property="og:title" content="${values.title}" />`,
       `<meta property="og:description" content="${values.description}" />`,
       `<meta property="og:image" content="${ogURL}" />`,
       `<!-- Twitter -->`,
-      `<meta name="twitter:card" content="${values.twitterCard}" />`,
+      `<meta name="twitter:card" content="${values.twitterCard ?? 'summary_large_image'}" />`,
       `<meta name="twitter:title" content="${values.title}" />`,
       `<meta name="twitter:description" content="${values.description}" />`,
       `<meta name="twitter:image" content="${ogURL}" />`,
